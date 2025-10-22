@@ -1,0 +1,202 @@
+@font-face {
+  font-family: "NeoDonggeunmo";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.3/NeoDunggeunmo.woff")
+    format("woff");
+  font-weight: normal;
+  font-display: swap;
+}
+
+#introScreen {
+  position: relative;
+  width: 800px;
+  height: 600px;
+  margin: 0 auto;
+  overflow: hidden;
+
+  border: 3px solid black;
+  overflow: hidden;
+}
+
+#characters {
+  width: 100%;
+  height: 100%;
+  display: flex; /* 가로로 고르게 배치 */
+  align-items: center;
+}
+
+#heros {
+  transform: rotateY(180deg) rotateX(15deg) rotateZ(10deg);
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  left: 20px;
+  top: 610px;
+}
+
+.monsters1 {
+  width: 300px;
+  height: 300px;
+  position: absolute;
+
+  top: 610px;
+  right: 150px;
+}
+
+.monsters2 {
+  width: 300px;
+  height: 300px;
+  position: absolute;
+
+  top: 610px;
+  right: 70px;
+}
+
+.monsters3 {
+  width: 250px;
+  height: 250px;
+  position: absolute;
+
+  top: 610px;
+  right: -30px;
+  z-index: -1;
+}
+
+.monsters4 {
+  width: 400px;
+  height: 400px;
+  position: absolute;
+
+  top: 610px;
+  right: -30px;
+  z-index: -2;
+}
+
+#gameTitle {
+  position: absolute;
+  top: 610px; /* 화면 위에서 위치 */
+  left: 50%; /* 가로 중앙 */
+  transform: translateX(-50%); /* 중앙 정렬 */
+  color: black;
+  font-size: 50px;
+  background-color: gray;
+  padding: 10px 20px; /* 글자 주위 여백 */
+  border-radius: 10px; /* 모서리 둥글게 */
+  display: inline-block; /* 글자 크기에 맞춰 컨테이너 크기 자동 */
+  font-family: "NeoDonggeunmo";
+}
+
+#menu {
+  position: absolute;
+  display: none;
+  top: 300px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: black;
+  font-size: 30px;
+  background-color: gray;
+  padding: 10px 20px;
+  border-radius: 10px;
+
+  font-family: "NeoDonggeunmo";
+  line-height: 2;
+}
+
+#menu {
+  opacity: 0; /* 처음엔 투명 */
+  transition: opacity 0.8s ease; /* 0.8초 동안 서서히 나타남 */
+}
+
+#menu.show {
+  opacity: 1; /* 서서히 나타남 */
+}
+
+#start,
+#load,
+#comunication {
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+#start:hover {
+  animation: sparkle 1s infinite;
+}
+
+#load:hover {
+  animation: sparkle 1s infinite;
+}
+#comunication:hover {
+  animation: sparkle 1s infinite;
+}
+
+@keyframes sparkle {
+  0%,
+  100% {
+    color: white;
+    text-shadow: 0 0 5px white, 0 0 10px white;
+  }
+  50% {
+    color: yellow;
+    text-shadow: 0 0 20px yellow, 0 0 30px yellow;
+  }
+}
+
+#start::after {
+  content: "";
+  display: block; /* ::after는 기본 inline이므로 block으로 바꿔야 보임 */
+  width: 100%; /* 원하는 너비 */
+  height: 0; /* 높이는 0으로 */
+  border-bottom: 2px solid black; /* 밑에만 선 */
+  margin-top: 5px; /* 원하면 글자와 간격 */
+}
+
+#load::after {
+  content: "";
+  display: block; /* ::after는 기본 inline이므로 block으로 바꿔야 보임 */
+  width: 100%; /* 원하는 너비 */
+  height: 0; /* 높이는 0으로 */
+  border-bottom: 2px solid black; /* 밑에만 선 */
+  margin-top: 5px; /* 원하면 글자와 간격 */
+}
+
+#loadTap {
+  display: none;
+  width: 500px;
+  height: 300px;
+  position: relative;
+  top: -400px;
+  margin: 0 auto;
+  overflow: hidden;
+  background-color: gray;
+  flex-direction: column;
+  text-align: center;
+  font-size: 30px;
+  justify-content: center;
+  transition: all 0.3s;
+  transform: scale(0);
+}
+#loadTap.show {
+  transform: scale(1); /* 활짝 펼쳐짐 */
+  opacity: 1;
+}
+
+#loadTap i {
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+}
+#pageTransition {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 800px;
+  height: 600px;
+  background: #000;
+  transform: scale(0);
+  transform-origin: center;
+  transition: transform 0.8s ease;
+  z-index: 2;
+}
+#pageTransition.active {
+  transform: scale(1); /* 펼쳐짐 */
+}

@@ -1,0 +1,94 @@
+#battle {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.battle-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background: linear-gradient(180deg, #1a1a2e, #16213e);
+}
+
+.hp-bar {
+  width: 150px;
+  height: 20px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.projectile {
+  position: absolute;
+  font-size: 30px;
+  top: 100px;
+  left: 100px;
+  z-index: 20;
+  pointer-events: none;
+  color: red;
+  transition: transform 0.4s linear;
+}
+
+.hp-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #ff4757, #ff6348);
+  width: 100%;
+  transition: width 0.3s;
+}
+
+#monster-hp-fill {
+  width: 100%;
+  height: 100%;
+  background-color: red;
+  transition: width 0.2s;
+}
+
+/* 몬스터 피격 깜빡임 */
+.hit {
+  animation: hitAnim 0.2s;
+}
+
+@keyframes hitAnim {
+  0% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(2);
+  }
+  100% {
+    filter: brightness(1);
+  }
+}
+
+#GreenMonster {
+  background-image: url("../image/GreenMonster.png");
+  background-size: cover;
+  width: 150px;
+  height: 150px;
+  position: absolute;
+  left: 50px;
+  top: 300px;
+}
+#dungeon {
+  position: relative;
+  width: 800px;
+  height: 600px;
+  background-color: #222; /* 확인용 배경 */
+  overflow: hidden;
+}
+
+#GreenMonster {
+  position: absolute;
+  left: 50px;
+  top: 300px;
+  width: 150px;
+  height: 150px;
+  background-image: url("../image/GreenMonster.png");
+  background-size: cover;
+  transition: transform 0.1s linear;
+}

@@ -1,0 +1,196 @@
+body {
+  margin: 0;
+  overflow: hidden;
+}
+
+#Hero {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background: url(../image/hero.png) center/contain no-repeat;
+
+  transition: transform 0.1s;
+  z-index: 10;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.attack {
+  animation: attackAnim 0.2s forwards;
+}
+
+/* @keyframes attackAnim {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(30px); 
+  }
+  100% {
+    transform: translateX(0); 
+  }
+} */
+
+.obstacle {
+  position: absolute;
+  /* background: rgba(0, 0, 0, 0.5);
+  border: 1px solid red; */
+  z-index: 5;
+}
+
+#game-container {
+  position: relative;
+  width: 800px;
+  height: 600px;
+
+  margin: 0 auto;
+  overflow: hidden;
+
+  top: 0;
+  margin: 0 auto;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.map {
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  display: none;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.map.active {
+  display: block;
+}
+
+#village {
+  background-image: url(../image/village.jpg);
+  border: 3px solid black;
+}
+
+#dungeon {
+  background-image: url(../image/dungeon.jpg);
+  border: 3px solid black;
+}
+
+#shop {
+  background-image: url(../image/shop.png);
+}
+
+.dungeon-Board {
+  position: absolute;
+  bottom: 10px;
+  left: 340px;
+  padding: 10px;
+  font-size: 20px;
+  font-weight: 600;
+  transition: all 0.2s;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  line-height: 1.5;
+  background-color: rgba(255, 255, 255, 0.5);
+  font-family: "NeoDonggeunmo";
+}
+
+.dungeon-Board::after {
+  content: "↓";
+  display: inline-block;
+  animation: bounceDown 0.5s infinite alternate;
+}
+
+.shop-Board {
+  position: absolute;
+  top: 280px;
+  left: 93px;
+  padding: 10px;
+  font-size: 20px;
+  font-weight: 600;
+  transition: all 0.2s;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  line-height: 1.5;
+  background-color: rgba(255, 255, 255, 0.5);
+  font-family: "NeoDonggeunmo";
+}
+
+.shop-Board::before {
+  content: "↑";
+  display: inline-block;
+  animation: bounceUp 0.5s infinite alternate;
+}
+
+.village-Board {
+  position: absolute;
+  top: 10px;
+  left: 170px;
+  padding: 10px;
+  font-size: 20px;
+  font-weight: 600;
+  transition: all 0.2s;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  line-height: 1.5;
+  background-color: rgba(255, 255, 255, 0.5);
+  font-family: "NeoDonggeunmo";
+}
+
+.village-Board::before {
+  content: "↑";
+  display: inline-block;
+  animation: bounceUp 0.5s infinite alternate;
+}
+
+.Boss-Board {
+  position: absolute;
+  top: 130px;
+  left: -10px;
+  padding: 10px;
+  font-size: 20px;
+  font-weight: 600;
+  transition: all 0.2s;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  line-height: 1.5;
+  background-color: rgba(255, 255, 255, 0.5);
+  font-family: "NeoDonggeunmo";
+}
+
+.Boss-Board::before {
+  content: "↑";
+  display: inline-block;
+  animation: bounceUp 0.5s infinite alternate;
+}
+
+@keyframes bounceDown {
+  0% {
+    transform: translateY(5px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounceUp {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(5px);
+  }
+}

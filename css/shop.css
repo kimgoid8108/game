@@ -1,0 +1,118 @@
+#shop {
+  width: 100%;
+  height: 100%;
+}
+
+#owner {
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  background: url(../image/shopowner.png) center/contain no-repeat;
+  left: 230px;
+  top: 280px;
+  cursor: pointer;
+  transition: all 0.3s;
+  z-index: 6;
+  transform: scaleX(-1);
+  overflow: hidden;
+}
+
+#shopinven {
+  position: absolute;
+  width: 200px;
+  height: 300px;
+  background-color: rgba(128, 128, 128, 0.9);
+  left: 400px;
+  top: 150px;
+  color: white;
+  display: none;
+  z-index: 11;
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
+i {
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+}
+
+#potion {
+  display: flex;
+  padding: 10px;
+  cursor: pointer;
+}
+
+#potioninfo {
+  position: absolute;
+  top: 35%;
+  left: 30%;
+  width: 300px;
+  height: 150px;
+  background-color: rgba(128, 128, 128, 0.9);
+  padding: 20px;
+  color: white;
+
+  display: none;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  line-height: 3;
+  z-index: 12;
+}
+
+#potioninfo .alarm {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+}
+
+#sword {
+  display: flex;
+  padding: 10px;
+  cursor: pointer;
+}
+#swordinfo {
+  position: absolute;
+  top: 35%;
+  left: 30%;
+  width: 300px;
+  height: 150px;
+  background-color: rgba(128, 128, 128, 0.9);
+  padding: 20px;
+  color: white;
+
+  display: none;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  line-height: 3;
+  z-index: 12;
+}
+#swordinfo .alarm {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+}
+
+.yesORno {
+  display: flex;
+  justify-content: center;
+  /* line-height: 5; */
+  gap: 10px;
+}
+
+.yesORno p {
+  cursor: pointer;
+}

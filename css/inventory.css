@@ -1,0 +1,22 @@
+.map-inventory {
+  display: none; /* 기본 숨김 */
+  position: absolute;
+  top: 3%;
+  right: 3%;
+  width: 200px;
+  max-width: 90%;
+  max-height: 90vh;
+  background: rgba(30, 30, 30, 0.95);
+  color: white;
+  border-radius: 15px;
+  padding: 20px;
+  z-index: 2000;
+
+  line-height: 2;
+  overflow-y: auto; /* 세로 내용이 넘치면 스크롤 */
+  overflow-x: hidden;
+}
+
+.map-inventory.active {
+  display: block;
+}

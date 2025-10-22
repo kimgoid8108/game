@@ -1,0 +1,39 @@
+@font-face {
+  font-family: "NeoDonggeunmo";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.3/NeoDunggeunmo.woff")
+    format("woff");
+  font-weight: normal;
+  font-display: swap;
+}
+
+#Heroinfo {
+  position: absolute;
+  width: 250px;
+
+  height: 70px;
+
+  height: 120px;
+
+  background-color: rgba(255, 255, 255, 0.8);
+  overflow: hidden;
+  z-index: 99999; /* z-index를 더 높게 설정 */
+  top: 10px; /* 위치를 명확하게 지정 */
+  left: 10px; /* 위치를 명확하게 지정 */
+  pointer-events: auto; /* 클릭 이벤트 활성화 */
+}
+
+.photo {
+  position: absolute;
+  transform: scaleX(-1);
+  left: -10px;
+  top: 10px;
+}
+
+.infomation {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.4;
+  justify-content: center;
+  margin-left: 80px;
+  font-family: "NeoDonggeunmo";
+}
