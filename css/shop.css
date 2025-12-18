@@ -18,92 +18,172 @@
 }
 
 #shopinven {
-  position: absolute;
-  width: 200px;
-  height: 300px;
-  background-color: rgba(128, 128, 128, 0.9);
-  left: 400px;
-  top: 150px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  max-width: 90vw;
+  min-height: 500px;
+  max-height: 80vh;
+  background: linear-gradient(135deg, rgba(40, 40, 50, 0.95), rgba(60, 60, 70, 0.95));
+  border: 3px solid rgba(100, 150, 255, 0.6);
+  border-radius: 20px;
   color: white;
   display: none;
-  z-index: 11;
+  z-index: 10000;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
+  overflow: hidden;
+  font-family: "NeoDonggeunmo", sans-serif;
 }
 
 .title {
   display: flex;
-  justify-content: center;
-  padding: 10px;
-}
-i {
-  position: absolute;
-  right: 10px;
-  cursor: pointer;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 2px solid rgba(100, 150, 255, 0.6);
+  background: rgba(0, 0, 0, 0.3);
+  font-size: 24px;
+  font-weight: bold;
 }
 
-#potion {
-  display: flex;
-  padding: 10px;
+.title i {
+  position: static;
+  font-size: 28px;
   cursor: pointer;
+  transition: transform 0.2s, color 0.2s;
+}
+
+.title i:hover {
+  transform: scale(1.2);
+  color: #ff4757;
+}
+
+
+.shop-items {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.shop-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(100, 150, 255, 0.3);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-height: 80px;
+}
+
+.shop-item:hover {
+  background: rgba(100, 150, 255, 0.2);
+  border-color: rgba(100, 150, 255, 0.8);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(100, 150, 255, 0.3);
+}
+
+.item-icon {
+  font-size: 40px;
+  min-width: 50px;
+  text-align: center;
+}
+
+.item-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.item-name {
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.item-price {
+  font-size: 16px;
+  color: #ffd700;
+  font-weight: bold;
 }
 
 #potioninfo {
-  position: absolute;
-  top: 35%;
-  left: 30%;
-  width: 300px;
-  height: 150px;
-  background-color: rgba(128, 128, 128, 0.9);
-  padding: 20px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  min-height: 200px;
+  background: linear-gradient(135deg, rgba(50, 50, 60, 0.98), rgba(70, 70, 80, 0.98));
+  border: 3px solid rgba(100, 150, 255, 0.8);
+  border-radius: 15px;
+  padding: 30px;
   color: white;
-
   display: none;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  line-height: 3;
-  z-index: 12;
+  line-height: 1.8;
+  z-index: 20000;
+  gap: 15px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+  font-family: "NeoDonggeunmo", sans-serif;
 }
 
 #potioninfo .alarm {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-
-  display: flex;
-  justify-content: center;
+  margin: 0;
+  padding: 0;
+  font-size: 1.4em;
+  font-weight: bold;
+  color: #ffd700;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
 }
 
-#sword {
-  display: flex;
-  padding: 10px;
-  cursor: pointer;
-}
-#swordinfo {
-  position: absolute;
-  top: 35%;
-  left: 30%;
-  width: 300px;
-  height: 150px;
-  background-color: rgba(128, 128, 128, 0.9);
-  padding: 20px;
+#bigPotioninfo,
+#attackPotioninfo,
+#defensePotioninfo,
+#expPotioninfo,
+#goldPotioninfo {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  min-height: 200px;
+  background: linear-gradient(135deg, rgba(50, 50, 60, 0.98), rgba(70, 70, 80, 0.98));
+  border: 3px solid rgba(100, 150, 255, 0.8);
+  border-radius: 15px;
+  padding: 30px;
   color: white;
-
   display: none;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  line-height: 3;
-  z-index: 12;
+  line-height: 1.8;
+  z-index: 20000;
+  gap: 15px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+  font-family: "NeoDonggeunmo", sans-serif;
 }
-#swordinfo .alarm {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
 
-  display: flex;
-  justify-content: center;
+#bigPotioninfo .alarm,
+#attackPotioninfo .alarm,
+#defensePotioninfo .alarm,
+#expPotioninfo .alarm,
+#goldPotioninfo .alarm {
+  margin: 0;
+  padding: 0;
+  font-size: 1.4em;
+  font-weight: bold;
+  color: #ffd700;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
 }
 
 .yesORno {
@@ -115,4 +195,27 @@ i {
 
 .yesORno p {
   cursor: pointer;
+  padding: 10px 25px;
+  background: rgba(100, 150, 255, 0.3);
+  border: 2px solid rgba(100, 150, 255, 0.6);
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.yesORno p:hover {
+  background: rgba(100, 150, 255, 0.6);
+  border-color: rgba(100, 150, 255, 1);
+  transform: scale(1.05);
+}
+
+.yesORno p:first-child:hover {
+  background: rgba(46, 213, 115, 0.6);
+  border-color: rgba(46, 213, 115, 1);
+}
+
+.yesORno p:last-child:hover {
+  background: rgba(255, 71, 87, 0.6);
+  border-color: rgba(255, 71, 87, 1);
 }

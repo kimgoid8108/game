@@ -7,20 +7,31 @@
 }
 
 #Heroinfo {
-  position: absolute;
-  width: 250px;
-
-  height: 70px;
-
-  height: 120px;
-
+  position: fixed;
+  width: 200px;
+  height: 100px;
   background-color: rgba(255, 255, 255, 0.8);
   overflow: hidden;
-  z-index: 99999; /* z-index를 더 높게 설정 */
-  top: 10px; /* 위치를 명확하게 지정 */
-  left: 10px; /* 위치를 명확하게 지정 */
-  pointer-events: auto; /* 클릭 이벤트 활성화 */
+  z-index: 99999;
+  top: 0; /* 화면 최상단 */
+  left: 0; /* 화면 왼쪽 끝 */
+  pointer-events: auto;
+  border-radius: 0 0 10px 0; /* 오른쪽 아래만 둥글게 */
+  opacity: 0.7; /* 반투명으로 덜 방해되도록 */
+  transition: opacity 0.3s ease;
 }
+
+/* 호버 시 더 선명하게 */
+#Heroinfo:hover {
+  opacity: 1;
+}
+
+/* 또는 완전히 숨기려면 아래 주석 해제 */
+/*
+#Heroinfo {
+  display: none !important;
+}
+*/
 
 .photo {
   position: absolute;

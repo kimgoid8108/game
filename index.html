@@ -12,10 +12,7 @@
       }
     </script>
 
-    <link
-      href="https://cdn.jsdelivr.net/npm/remixicon@4.7.0/fonts/remixicon.css"
-      rel="stylesheet"
-    />
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.7.0/fonts/remixicon.css" rel="stylesheet" />
     <link rel="stylesheet" href="../../reset.css" />
 
     <link rel="stylesheet" href="css/index.css" />
@@ -27,6 +24,7 @@
     <link rel="stylesheet" href="css/battle.css" />
     <link rel="stylesheet" href="css/inventory.css" />
     <link rel="stylesheet" href="css/heroinfo.css" />
+    <link rel="stylesheet" href="css/bottom-ui.css" />
 
     <link rel="stylesheet" href="css/fadein.css" />
     <link rel="stylesheet" href="css/nickname.css" />
@@ -38,6 +36,7 @@
     <script src="js/shop.js" defer></script>
     <script src="js/attack.js" defer></script>
     <script src="js/monsterAttack.js" defer></script>
+    <script src="js/bottom-ui.js" defer></script>
   </head>
   <body>
     <script>
@@ -55,44 +54,16 @@
     <div id="game-container">
       <div id="pageTransition"></div>
       <div id="nicknameModal" style="display: none">
-        <div
-          style="
-            background: rgba(0, 0, 0, 0.8);
-            padding: 30px;
-            border-radius: 10px;
-            text-align: center;
-          "
-        >
+        <div style="background: rgba(0, 0, 0, 0.8); padding: 30px; border-radius: 10px; text-align: center">
           <h2 style="color: white; margin-bottom: 20px">닉네임을 입력하세요</h2>
           <input
             type="text"
             id="nicknameInput"
             maxlength="10"
             placeholder="닉네임 (최대 10자)"
-            style="
-              padding: 10px;
-              font-size: 18px;
-              border-radius: 5px;
-              border: none;
-              margin-bottom: 20px;
-              width: 200px;
-            "
-          />
+            style="padding: 10px; font-size: 18px; border-radius: 5px; border: none; margin-bottom: 20px; width: 200px" />
           <br />
-          <button
-            id="nicknameSubmit"
-            style="
-              padding: 10px 30px;
-              font-size: 18px;
-              cursor: pointer;
-              border-radius: 5px;
-              border: none;
-              background: #4caf50;
-              color: white;
-            "
-          >
-            확인
-          </button>
+          <button id="nicknameSubmit" style="padding: 10px 30px; font-size: 18px; cursor: pointer; border-radius: 5px; border: none; background: #4caf50; color: white">확인</button>
         </div>
       </div>
       <section id="mainWindow"></section>
@@ -100,15 +71,91 @@
         <img class="photo" src="image/hero.png" alt="" />
         <div class="infomation">
           <h2 id="ninkname">이름:</h2>
-          <p id="gold">골드:</p>
-
-          <p>히어로 HP: <span id="Hp">100</span>/100</p>
-
-          <p>히어로 HP: <span id="HP">100</span>/100</p>
-          <p>히어로 경험치: <span id="EXP">0</span>/100</p>
+          <p>체력: <span id="HP">100</span>/100</p>
+          <p>레벨: <span id="level">1</span></p>
+          <p id="gold">골드: <span id="goldAmount">0</span>G</p>
+          <p>경험치: <span id="EXP">0</span>/<span id="expMax">100</span></p>
         </div>
       </div>
 
+      <!-- 메이플스토리 스타일 하단 UI -->
+      <div id="bottom-ui" class="bottom-ui">
+        <!-- 왼쪽: 캐릭터 정보 -->
+        <div class="character-info">
+          <div class="char-name">
+            <span id="charNameDisplay">이름:</span>
+          </div>
+          <div class="stat-bars">
+            <div class="hp-bar-container">
+              <div class="stat-label">HP</div>
+              <div class="stat-bar hp-bar">
+                <div class="stat-bar-fill hp-fill" id="hpBarFill"></div>
+                <span class="stat-text" id="hpText">100/100</span>
+              </div>
+            </div>
+            <div class="exp-bar-container">
+              <div class="stat-label">EXP</div>
+              <div class="stat-bar exp-bar">
+                <div class="stat-bar-fill exp-fill" id="expBarFill"></div>
+                <span class="stat-text" id="expText">0/100</span>
+              </div>
+            </div>
+            <div class="level-gold">
+              <span>Lv.<span id="levelDisplay">1</span></span>
+              <span>💰<span id="goldDisplay">0</span>G</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 중앙: 아이템 퀵슬롯 -->
+        <div class="quick-slot-container">
+          <div class="quick-slot" data-slot="0">
+            <div class="slot-content"></div>
+            <div class="slot-number">1</div>
+          </div>
+          <div class="quick-slot" data-slot="1">
+            <div class="slot-content"></div>
+            <div class="slot-number">2</div>
+          </div>
+          <div class="quick-slot" data-slot="2">
+            <div class="slot-content"></div>
+            <div class="slot-number">3</div>
+          </div>
+          <div class="quick-slot" data-slot="3">
+            <div class="slot-content"></div>
+            <div class="slot-number">4</div>
+          </div>
+          <div class="quick-slot" data-slot="4">
+            <div class="slot-content"></div>
+            <div class="slot-number">5</div>
+          </div>
+        </div>
+
+        <!-- 오른쪽: 무기 전환, 스킬 슬롯 및 버튼 -->
+        <div class="skill-buttons">
+          <!-- 무기 전환 슬롯 -->
+          <div class="weapon-switch-container">
+            <div class="weapon-slot" data-weapon="총🔫" id="weaponGun">
+              <div class="weapon-icon">🔫</div>
+              <div class="weapon-key">Q</div>
+            </div>
+            <div class="weapon-slot" data-weapon="철검🗡️" id="weaponSword">
+              <div class="weapon-icon">🗡️</div>
+              <div class="weapon-key">E</div>
+            </div>
+          </div>
+          <div class="skill-slot" data-skill="attack">
+            <div class="skill-icon">⚔️</div>
+            <div class="skill-key">Z</div>
+          </div>
+          <button class="ui-button inventory-btn" id="inventoryBtn">
+            <span>인벤토리</span>
+            <span class="key-hint">I</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 인벤토리 창 (기존) -->
       <div id="inventory" class="map-inventory">
         <div class="inventory-container">
           <h2>인벤토리</h2>
@@ -121,255 +168,108 @@
         <div class="shop-Board">상점 입구</div>
         <div class="dungeon-Board">던전 입구</div>
         <div class="obstacleList">
-          <div
-            class="obstacle house1"
-            style="left: 25px; top: 125px; width: 250px; height: 155px"
-          ></div>
-          <div
-            class="obstacle house2"
-            style="left: 275px; top: 150px; width: 45px; height: 130px"
-          ></div>
-          <div
-            class="obstacle tree1"
-            style="left: 0px; top: 290px; width: 50px; height: 50px"
-          ></div>
-          <div
-            class="obstacle rock"
-            style="left: 290px; top: 340px; width: 45px; height: 10px"
-          ></div>
-          <div
-            class="obstacle flower1"
-            style="left: 370px; top: 410px; width: 45px; height: 30px"
-          ></div>
-          <div
-            class="obstacle flower2"
-            style="left: 400px; top: 210px; width: 50px; height: 30px"
-          ></div>
-          <div
-            class="obstacle precipice1"
-            style="left: 250px; top: 0px; width: 550px; height: 50px"
-          ></div>
-          <div
-            class="obstacle precipice2"
-            style="left: 530px; top: 40px; width: 320px; height: 150px"
-          ></div>
-          <div
-            class="obstacle precipice3"
-            style="left: 540px; top: 210px; width: 320px; height: 150px"
-          ></div>
-          <div
-            class="obstacle river1"
-            style="right: 120px; bottom: 10px; width: 150px; height: 100px"
-          ></div>
-          <div
-            class="obstacle river2"
-            style="right: 60px; bottom: 5px; width: 75px; height: 130px"
-          ></div>
-          <div
-            class="obstacle river3"
-            style="right: 0px; bottom: 35px; width: 50px; height: 130px"
-          ></div>
-          <div
-            class="obstacle tree1"
-            style="left: 25px; top: 340px; width: 70px; height: 90px"
-          ></div>
-          <div
-            class="obstacle tree2"
-            style="left: 100px; top: 400px; width: 100px; height: 90px"
-          ></div>
-          <div
-            class="obstacle tree3"
-            style="left: 70px; top: 510px; width: 35px; height: 5px"
-          ></div>
-          <div
-            class="obstacle half-tree"
-            style="left: 452px; top: 425px; width: 15px; height: 10px"
-          ></div>
-          <div
-            class="obstacle Big-tree"
-            style="left: 480px; top: 300px; width: 80px; height: 100px"
-          ></div>
-          <div
-            class="obstacle small-rock"
-            style="left: 560px; top: 380px; width: 50px; height: 20px"
-          ></div>
+          <div class="obstacle house1" style="left: 25px; top: 125px; width: 250px; height: 155px"></div>
+          <div class="obstacle house2" style="left: 275px; top: 150px; width: 45px; height: 130px"></div>
+          <div class="obstacle tree1" style="left: 0px; top: 290px; width: 50px; height: 50px"></div>
+          <div class="obstacle rock" style="left: 290px; top: 340px; width: 45px; height: 10px"></div>
+          <div class="obstacle flower1" style="left: 370px; top: 410px; width: 45px; height: 30px"></div>
+          <div class="obstacle flower2" style="left: 400px; top: 210px; width: 50px; height: 30px"></div>
+          <div class="obstacle precipice1" style="left: 250px; top: 0px; width: 550px; height: 50px"></div>
+          <div class="obstacle precipice2" style="left: 530px; top: 40px; width: 320px; height: 150px"></div>
+          <div class="obstacle precipice3" style="left: 540px; top: 210px; width: 320px; height: 150px"></div>
+          <div class="obstacle river1" style="right: 120px; bottom: 10px; width: 150px; height: 100px"></div>
+          <div class="obstacle river2" style="right: 60px; bottom: 5px; width: 75px; height: 130px"></div>
+          <div class="obstacle river3" style="right: 0px; bottom: 35px; width: 50px; height: 130px"></div>
+          <div class="obstacle tree1" style="left: 25px; top: 340px; width: 70px; height: 90px"></div>
+          <div class="obstacle tree2" style="left: 100px; top: 400px; width: 100px; height: 90px"></div>
+          <div class="obstacle tree3" style="left: 70px; top: 510px; width: 35px; height: 5px"></div>
+          <div class="obstacle half-tree" style="left: 452px; top: 425px; width: 15px; height: 10px"></div>
+          <div class="obstacle Big-tree" style="left: 480px; top: 300px; width: 80px; height: 100px"></div>
+          <div class="obstacle small-rock" style="left: 560px; top: 380px; width: 50px; height: 20px"></div>
         </div>
       </section>
       <section id="dungeon" class="map">
-        <div
-          class="monster"
-          id="GreenMonster"
-          data-name="그린 슬라임"
-          data-hp="100"
-          data-max-hp="100"
-          data-attack="15"
-          data-defense="5"
-          data-gold="50"
-          data-exp="30"
-        ></div>
+        <div class="monster" id="GreenMonster" data-name="그린 슬라임" data-hp="100" data-max-hp="100" data-attack="15" data-defense="5" data-gold="50" data-exp="30"></div>
         <div class="village-Board">마을 입구</div>
         <div class="Boss-Board">보스동굴 입구</div>
         <div class="obstacleList">
-          <div
-            class="obstacle chest"
-            style="left: 610px; top: 105px; width: 60px; height: 20px"
-          ></div>
-          <div
-            class="obstacle precipice1"
-            style="left: 300px; top: 50px; width: 210px; height: 80px"
-          ></div>
-          <div
-            class="obstacle precipice2"
-            style="left: 530px; top: 0px; width: 230px; height: 50px"
-          ></div>
-          <div
-            class="obstacle precipice3"
-            style="right: 0px; top: 0px; width: 30px; height: 120px"
-          ></div>
-          <div
-            class="obstacle river"
-            style="left: 375px; top: 220px; width: 150px; height: 130px"
-          ></div>
-          <div
-            class="obstacle precipiceLeft"
-            style="left: 0px; top: 30px; width: 150px; height: 80px"
-          ></div>
-          <div
-            class="obstacle leftPillar"
-            style="left: 0px; top: 30px; width: 30px; height: 120px"
-          ></div>
-          <div
-            class="obstacle rightPillar"
-            style="left: 100px; top: 30px; width: 50px; height: 120px"
-          ></div>
-          <div
-            class="obstacle BigRock"
-            style="left: 155px; top: 290px; width: 90px; height: 40px"
-          ></div>
-          <div
-            class="obstacle BigHalfTree"
-            style="
-              left: 155px;
-              top: 510px;
-              width: 160px;
-              height: 40px;
-              transform: rotate(-20deg);
-            "
-          ></div>
-          <div
-            class="obstacle BigHalfTree"
-            style="left: 450px; top: 430px; width: 220px; height: 150px"
-          ></div>
-          <div
-            class="obstacle BigBigTree"
-            style="right: -2px; top: 320px; width: 100px; height: 150px"
-          ></div>
-          <div
-            class="obstacle BigBigTreeL"
-            style="
-              right: 2px;
-              top: 200px;
-              width: 50px;
-              height: 150px;
-              transform: rotate(40deg);
-            "
-          ></div>
+          <div class="obstacle chest" style="left: 610px; top: 105px; width: 60px; height: 20px"></div>
+          <div class="obstacle precipice1" style="left: 300px; top: 50px; width: 210px; height: 80px"></div>
+          <div class="obstacle precipice2" style="left: 530px; top: 0px; width: 230px; height: 50px"></div>
+          <div class="obstacle precipice3" style="right: 0px; top: 0px; width: 30px; height: 120px"></div>
+          <div class="obstacle river" style="left: 375px; top: 220px; width: 150px; height: 130px"></div>
+          <div class="obstacle precipiceLeft" style="left: 0px; top: 30px; width: 150px; height: 80px"></div>
+          <div class="obstacle leftPillar" style="left: 0px; top: 30px; width: 30px; height: 120px"></div>
+          <div class="obstacle rightPillar" style="left: 100px; top: 30px; width: 50px; height: 120px"></div>
+          <div class="obstacle BigRock" style="left: 155px; top: 290px; width: 90px; height: 40px"></div>
+          <div class="obstacle BigHalfTree" style="left: 155px; top: 510px; width: 160px; height: 40px; transform: rotate(-20deg)"></div>
+          <div class="obstacle BigHalfTree" style="left: 450px; top: 430px; width: 220px; height: 150px"></div>
+          <div class="obstacle BigBigTree" style="right: -2px; top: 320px; width: 100px; height: 150px"></div>
+          <div class="obstacle BigBigTreeL" style="right: 2px; top: 200px; width: 50px; height: 150px; transform: rotate(40deg)"></div>
         </div>
       </section>
       <section id="shop" class="map">
         <div class="obstacleList">
-          <div
-            class="obstacle house1"
-            style="
-              left: 375px;
-              top: 415px;
-              width: 10px;
-              height: 70px;
-              transform: rotate(-60deg);
-            "
-          ></div>
-          <div
-            class="obstacle house1"
-            style="
-              left: 440px;
-              top: 390px;
-              width: 10px;
-              height: 95px;
-              transform: rotate(60deg);
-            "
-          ></div>
-          <div
-            class="obstacle house1"
-            style="
-              left: 390px;
-              top: 365px;
-              width: 10px;
-              height: 95px;
-              transform: rotate(60deg);
-            "
-          ></div>
-          <div
-            class="obstacle house1"
-            style="
-              left: 450px;
-              top: 375px;
-              width: 10px;
-              height: 60px;
-              transform: rotate(-60deg);
-            "
-          ></div>
-          <div
-            class="obstacle house1"
-            style="left: 280px; top: 300px; width: 80px; height: 110px"
-          ></div>
-          <div
-            class="obstacle house1"
-            style="
-              left: 180px;
-              top: 40px;
-              width: 150px;
-              height: 500px;
-              transform: rotate(60deg);
-            "
-          ></div>
-          <div
-            class="obstacle house1"
-            style="
-              left: 470px;
-              top: 20px;
-              width: 150px;
-              height: 500px;
-              transform: rotate(-60deg);
-            "
-          ></div>
-          <div
-            class="obstacle house1"
-            style="
-              left: 580px;
-              top: 350px;
-              width: 30px;
-              height: 400px;
-              transform: rotate(-120deg);
-            "
-          ></div>
-          <div
-            class="obstacle house1"
-            style="
-              left: 200px;
-              top: 370px;
-              width: 30px;
-              height: 400px;
-              transform: rotate(-240deg);
-            "
-          ></div>
+          <div class="obstacle house1" style="left: 375px; top: 415px; width: 10px; height: 70px; transform: rotate(-60deg)"></div>
+          <div class="obstacle house1" style="left: 440px; top: 390px; width: 10px; height: 95px; transform: rotate(60deg)"></div>
+          <div class="obstacle house1" style="left: 390px; top: 365px; width: 10px; height: 95px; transform: rotate(60deg)"></div>
+          <div class="obstacle house1" style="left: 450px; top: 375px; width: 10px; height: 60px; transform: rotate(-60deg)"></div>
+          <div class="obstacle house1" style="left: 280px; top: 300px; width: 80px; height: 110px"></div>
+          <div class="obstacle house1" style="left: 180px; top: 40px; width: 150px; height: 500px; transform: rotate(60deg)"></div>
+          <div class="obstacle house1" style="left: 470px; top: 20px; width: 150px; height: 500px; transform: rotate(-60deg)"></div>
+          <div class="obstacle house1" style="left: 580px; top: 350px; width: 30px; height: 400px; transform: rotate(-120deg)"></div>
+          <div class="obstacle house1" style="left: 200px; top: 370px; width: 30px; height: 400px; transform: rotate(-240deg)"></div>
         </div>
         <div id="owner"></div>
         <div id="shopinven">
           <h2 class="title">
-            상점 아이템<i id="close" class="ri-close-large-line"></i>
+            <span>🛒 상점</span>
+            <i id="close" class="ri-close-large-line"></i>
           </h2>
-          <p id="potion">1. 작은 포션🧪: 10G</p>
-          <p id="sword">2. 철검🗡️: 50G</p>
+          <div class="shop-items">
+            <div class="shop-item" id="potion">
+              <div class="item-icon">🧪</div>
+              <div class="item-info">
+                <div class="item-name">작은 포션</div>
+                <div class="item-price">10G</div>
+              </div>
+            </div>
+            <div class="shop-item" id="bigPotion">
+              <div class="item-icon">🧪</div>
+              <div class="item-info">
+                <div class="item-name">큰 포션</div>
+                <div class="item-price">25G</div>
+              </div>
+            </div>
+            <div class="shop-item" id="attackPotion">
+              <div class="item-icon">⚔️</div>
+              <div class="item-info">
+                <div class="item-name">공격력 포션</div>
+                <div class="item-price">30G</div>
+              </div>
+            </div>
+            <div class="shop-item" id="defensePotion">
+              <div class="item-icon">🛡️</div>
+              <div class="item-info">
+                <div class="item-name">방어력 포션</div>
+                <div class="item-price">30G</div>
+              </div>
+            </div>
+            <div class="shop-item" id="expPotion">
+              <div class="item-icon">⭐</div>
+              <div class="item-info">
+                <div class="item-name">경험치 포션</div>
+                <div class="item-price">40G</div>
+              </div>
+            </div>
+            <div class="shop-item" id="goldPotion">
+              <div class="item-icon">💰</div>
+              <div class="item-info">
+                <div class="item-name">골드 포션</div>
+                <div class="item-price">40G</div>
+              </div>
+            </div>
+          </div>
         </div>
         <div id="potioninfo">
           <h2 class="alarm">알림</h2>
@@ -379,12 +279,44 @@
             <p id="potionNo">[ 아니오 ]</p>
           </div>
         </div>
-        <div id="swordinfo">
+        <div id="bigPotioninfo">
           <h2 class="alarm">알림</h2>
-          <p>철검(50G)을 구매하시겠습니까?</p>
+          <p>큰 포션(25G)을 구매하시겠습니까?</p>
           <div class="yesORno">
-            <p id="swordYes">[ 예 ]</p>
-            <p id="swordNo">[ 아니오 ]</p>
+            <p id="bigPotionYes">[ 예 ]</p>
+            <p id="bigPotionNo">[ 아니오 ]</p>
+          </div>
+        </div>
+        <div id="attackPotioninfo">
+          <h2 class="alarm">알림</h2>
+          <p>공격력 포션(30G)을 구매하시겠습니까?</p>
+          <div class="yesORno">
+            <p id="attackPotionYes">[ 예 ]</p>
+            <p id="attackPotionNo">[ 아니오 ]</p>
+          </div>
+        </div>
+        <div id="defensePotioninfo">
+          <h2 class="alarm">알림</h2>
+          <p>방어력 포션(30G)을 구매하시겠습니까?</p>
+          <div class="yesORno">
+            <p id="defensePotionYes">[ 예 ]</p>
+            <p id="defensePotionNo">[ 아니오 ]</p>
+          </div>
+        </div>
+        <div id="expPotioninfo">
+          <h2 class="alarm">알림</h2>
+          <p>경험치 포션(40G)을 구매하시겠습니까?</p>
+          <div class="yesORno">
+            <p id="expPotionYes">[ 예 ]</p>
+            <p id="expPotionNo">[ 아니오 ]</p>
+          </div>
+        </div>
+        <div id="goldPotioninfo">
+          <h2 class="alarm">알림</h2>
+          <p>골드 포션(40G)을 구매하시겠습니까?</p>
+          <div class="yesORno">
+            <p id="goldPotionYes">[ 예 ]</p>
+            <p id="goldPotionNo">[ 아니오 ]</p>
           </div>
         </div>
       </section>

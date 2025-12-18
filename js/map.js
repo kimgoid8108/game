@@ -1,4 +1,2 @@
-document.addEventListener("DOMContentLoaded", () => {
-  x = Math.max(0, Math.min(800 - 64, x));
-  y = Math.max(0, Math.min(500 - 64, y));
-});
+// map.js는 현재 사용되지 않는 파일로 보입니다.
+// heroMove.js에서 맵 관련 로직을 처리하고 있습니다.

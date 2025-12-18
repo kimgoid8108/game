@@ -13,9 +13,8 @@ document.addEventListener("DOMContentLoaded", () => {
   map.classList.add("active");
   map.appendChild(hero);
 
-  // 빌리지 중앙에서 시작
-  let x = map.offsetWidth / 2 - hero.offsetWidth / 2;
-  let y = map.offsetHeight / 2 - hero.offsetHeight / 2;
+  let x = map.offsetWidth / 2;
+  let y = map.offsetHeight / 2;
 
   let speed = 3;
   let keys = {};
@@ -62,11 +61,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (e.key === "ArrowRight" || e.key === "d") {
       facing = "right";
-      hero.style.transform = "scaleX(-1)";
+      hero.style.transform = "translate(-50%, -50%) scaleX(-1)"; // 오른쪽 보기
     }
     if (e.key === "ArrowLeft" || e.key === "a") {
       facing = "left";
-      hero.style.transform = "scaleX(1)";
+      hero.style.transform = "translate(-50%, -50%) scaleX(1)"; // 왼쪽 보기
     }
   });
 

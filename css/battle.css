@@ -92,3 +92,113 @@
   background-size: cover;
   transition: transform 0.1s linear;
 }
+
+/* 몬스터 HP 레이블 스타일 */
+.monster-hp-label {
+  font-family: "NeoDonggeunmo", sans-serif !important;
+  font-size: 14px !important;
+  font-weight: bold !important;
+  color: white !important;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  pointer-events: none;
+  z-index: 20;
+}
+
+/* 몬스터 HP 바 스타일 */
+.monster-hp-bar {
+  position: absolute;
+  height: 8px;
+  background: rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+  overflow: hidden;
+  z-index: 19;
+  pointer-events: none;
+}
+
+.monster-hp-bar::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: var(--hp-width, 100%);
+  background: linear-gradient(90deg, #ff4757, #ff6348);
+  transition: width 0.3s ease;
+}
+
+/* 골드/경험치 획득 알림 박스 */
+.reward-notification {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+  background: rgba(0, 0, 0, 0.9);
+  border: 3px solid #2ed573;
+  border-radius: 15px;
+  padding: 15px 25px;
+  color: white;
+  font-family: "NeoDonggeunmo", sans-serif;
+  z-index: 10000;
+  opacity: 0;
+  transition: all 0.3s ease;
+  pointer-events: none;
+  box-shadow: 0 0 20px rgba(46, 213, 115, 0.5);
+  min-width: 150px;
+}
+
+.reward-notification.show {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.reward-notification.levelup {
+  border-color: #ffd700;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+}
+
+.reward-notification.gold-notification {
+  border-color: #ffd700;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+  background: rgba(0, 0, 0, 0.95);
+}
+
+.reward-notification.exp-notification {
+  border-color: #4a90e2;
+  box-shadow: 0 0 20px rgba(74, 144, 226, 0.5);
+  background: rgba(0, 0, 0, 0.95);
+}
+
+.reward-content {
+  text-align: center;
+}
+
+.reward-content h3 {
+  margin: 0;
+  font-size: 18px;
+  color: #2ed573;
+}
+
+.reward-notification.levelup .reward-content h3 {
+  color: #ffd700;
+}
+
+.reward-content p {
+  margin: 0;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.gold-notification .reward-content p {
+  color: #ffd700;
+}
+
+.exp-notification .reward-content p {
+  color: #4a90e2;
+}
+
+.reward-notification.item-notification {
+  border-color: #4caf50;
+  box-shadow: 0 0 20px rgba(76, 175, 80, 0.5);
+  background: rgba(0, 0, 0, 0.95);
+}

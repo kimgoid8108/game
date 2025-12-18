@@ -1,16 +1,17 @@
 .map-inventory {
   display: none; /* 기본 숨김 */
-  position: absolute;
-  top: 3%;
-  right: 3%;
-  width: 200px;
-  max-width: 90%;
-  max-height: 90vh;
+  position: fixed; /* 화면에 고정 */
+  top: 0; /* 화면 최상단 */
+  right: 0; /* 화면 오른쪽 끝 */
+  width: 250px;
+  max-height: 100vh; /* 화면 높이만큼 */
   background: rgba(30, 30, 30, 0.95);
   color: white;
-  border-radius: 15px;
+  border-radius: 15px 0 0 15px; /* 왼쪽만 둥글게 */
   padding: 20px;
   z-index: 2000;
+  border-left: 3px solid rgba(100, 150, 255, 0.6);
+  box-shadow: -5px 0 20px rgba(0, 0, 0, 0.5);
 
   line-height: 2;
   overflow-y: auto; /* 세로 내용이 넘치면 스크롤 */
@@ -19,4 +20,42 @@
 
 .map-inventory.active {
   display: block;
+}
+
+.inventory-container {
+  width: 100%;
+  height: 100%;
+}
+
+.inventory-container h2 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-family: "NeoDonggeunmo", sans-serif;
+  font-size: 18px;
+  text-align: center;
+  color: #fff;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  border-bottom: 2px solid rgba(100, 150, 255, 0.6);
+  padding-bottom: 10px;
+}
+
+#inventory-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#inventory-items li {
+  padding: 10px;
+  margin-bottom: 5px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: "NeoDonggeunmo", sans-serif;
+}
+
+#inventory-items li:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateX(-5px);
 }

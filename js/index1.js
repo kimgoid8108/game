@@ -106,7 +106,10 @@ startBtn.addEventListener("click", () => {
   // 2️⃣ 중앙에서 펼치기 시작
   transition.classList.add("active");
 
-  // 3️⃣ 애니메이션 끝난 후 페이지 이동
+  // 3️⃣ index.html에서 전환 애니메이션을 건너뛰기 위한 플래그 설정
+  sessionStorage.setItem("skipTransition", "true");
+
+  // 4️⃣ 애니메이션 끝난 후 페이지 이동
   setTimeout(() => {
     window.location.href = "index.html";
   }, 800); // CSS transition 시간과 동일
@@ -114,17 +117,22 @@ startBtn.addEventListener("click", () => {
 
 const loadTap = document.querySelector("#loadTap");
 const close = document.querySelector("#close");
+const load = document.querySelector("#load");
 
-load.addEventListener("click", () => {
-  loadTap.style.display = "flex"; // 먼저 보이게
-  setTimeout(() => {
-    loadTap.classList.add("show"); // scale 1, opacity 1로
-  }, 50); // 브라우저 렌더링 시간
-});
+if (load) {
+  load.addEventListener("click", () => {
+    loadTap.style.display = "flex"; // 먼저 보이게
+    setTimeout(() => {
+      loadTap.classList.add("show"); // scale 1, opacity 1로
+    }, 50); // 브라우저 렌더링 시간
+  });
+}
 
-close.addEventListener("click", () => {
-  loadTap.classList.remove("show"); // 다시 가운데로 모여 사라짐
-  setTimeout(() => {
-    loadTap.style.display = "none"; // 완료 후 display none
-  }, 500); // 트랜지션 시간과 맞춤
-});
+if (close) {
+  close.addEventListener("click", () => {
+    loadTap.classList.remove("show"); // 다시 가운데로 모여 사라짐
+    setTimeout(() => {
+      loadTap.style.display = "none"; // 완료 후 display none
+    }, 500); // 트랜지션 시간과 맞춤
+  });
+}

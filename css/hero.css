@@ -8,12 +8,11 @@ body {
   width: 50px;
   height: 50px;
   background: url(../image/hero.png) center/contain no-repeat;
-
-  transition: transform 0.1s;
   z-index: 10;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  transition: transform 0.1s;
 }
 
 .attack {
@@ -25,12 +24,54 @@ body {
     transform: translateX(0);
   }
   50% {
-    transform: translateX(30px); 
+    transform: translateX(30px);
   }
   100% {
-    transform: translateX(0); 
+    transform: translateX(0);
   }
 } */
+
+/* 검 휘두르는 애니메이션 */
+.sword-swing {
+  animation: swordSwing 0.3s ease-out;
+  animation-fill-mode: forwards;
+}
+
+@keyframes swordSwing {
+  0% {
+    transform: scaleX(var(--hero-scale, 1)) rotate(0deg);
+  }
+  25% {
+    transform: scaleX(var(--hero-scale, 1)) rotate(-20deg) scale(1.1);
+  }
+  50% {
+    transform: scaleX(var(--hero-scale, 1)) rotate(20deg) scale(1.15);
+  }
+  75% {
+    transform: scaleX(var(--hero-scale, 1)) rotate(-10deg) scale(1.05);
+  }
+  100% {
+    transform: scaleX(var(--hero-scale, 1)) rotate(0deg) scale(1);
+  }
+}
+
+/* 검 이펙트 스타일 */
+.sword-effect {
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.8),
+              0 0 40px rgba(200, 200, 255, 0.6);
+  animation: swordGlow 0.3s ease-out;
+}
+
+@keyframes swordGlow {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.3) rotate(180deg);
+  }
+}
 
 .obstacle {
   position: absolute;
