@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     village: document.getElementById("village"),
     dungeon: document.getElementById("dungeon"),
     shop: document.getElementById("shop"),
+    boss: document.getElementById("boss"),
   };
 
   let currentMapId = "village";
@@ -269,6 +270,31 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
+    // 5. 던전 → 보스동굴 (보스동굴 입구 - 왼쪽 상단)
+    const bossEnterX = 0;
+    const bossEnterY = 130;
+    const bossEnterRange = 80;
+    if (
+      currentMap.id === "dungeon" &&
+      x <= bossEnterX + bossEnterRange &&
+      y >= bossEnterY - bossEnterRange &&
+      y <= bossEnterY + bossEnterRange
+    ) {
+      changeMap("boss");
+      return;
+    }
+
+    // 6. 보스동굴 → 던전 (던전 입구 - 왼쪽 상단)
+    if (
+      currentMap.id === "boss" &&
+      x <= bossEnterX + bossEnterRange &&
+      y >= bossEnterY - bossEnterRange &&
+      y <= bossEnterY + bossEnterRange
+    ) {
+      changeMap("dungeon");
+      return;
+    }
+
     animationId = requestAnimationFrame(moveHero);
   }
 
@@ -298,6 +324,10 @@ document.addEventListener("DOMContentLoaded", () => {
       // 던전 입장: 상단 왼쪽 30% 지점
       x = map.offsetWidth * 0.3 - heroWidth / 2;
       y = 60;
+    } else if (nextMapId === "boss") {
+      // 보스동굴 입장: 입구에서 멀리 떨어진 위치 (오른쪽 중앙)
+      x = map.offsetWidth * 0.7 - heroWidth / 2;
+      y = map.offsetHeight / 2 - heroHeight / 2;
     } else if (nextMapId === "shop") {
       // 상점 입장: 하단 중앙에서 시작
       x = map.offsetWidth / 2 - heroWidth / 2;

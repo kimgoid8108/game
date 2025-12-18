@@ -84,15 +84,19 @@ function animateBounce(el, startTop, targetTop, audio) {
 }
 
 // 페이지 로드 시 자동 실행
-window.addEventListener("load", () => {
-  setTimeout(popUpSequence, 500);
-});
+window.addEventListener("load", async () => {
+  setTimeout(async () => {
+    // 인트로 애니메이션 완료 대기
+    await popUpSequence();
 
-setTimeout(() => {
-  const menu = document.getElementById("menu");
-  menu.style.display = "block";
-  menu.classList.add("show"); // opacity 1로 부드럽게
-}, 7000);
+    // 인트로가 완전히 끝난 후 메뉴 표시
+    const menu = document.getElementById("menu");
+    if (menu) {
+      menu.style.display = "block";
+      menu.classList.add("show"); // opacity 1로 부드럽게
+    }
+  }, 500);
+});
 
 const startBtn = document.getElementById("start");
 const transition = document.getElementById("pageTransition");

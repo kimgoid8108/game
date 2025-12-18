@@ -50,12 +50,22 @@
   margin-bottom: 5px;
   background: rgba(255, 255, 255, 0.1);
   border-radius: 5px;
-  cursor: pointer;
+  cursor: grab;
   transition: all 0.2s ease;
   font-family: "NeoDonggeunmo", sans-serif;
+  user-select: none;
 }
 
 #inventory-items li:hover {
   background: rgba(255, 255, 255, 0.2);
   transform: translateX(-5px);
+}
+
+#inventory-items li:active {
+  cursor: grabbing;
+}
+
+#inventory-items li.dragging {
+  opacity: 0.5;
+  transform: scale(0.95);
 }

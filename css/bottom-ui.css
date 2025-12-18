@@ -136,6 +136,13 @@
   transform: scale(1.1);
 }
 
+.quick-slot.drag-over {
+  border-color: rgba(100, 150, 255, 1);
+  background: rgba(20, 40, 80, 0.9);
+  transform: scale(1.15);
+  box-shadow: 0 0 15px rgba(100, 150, 255, 0.6);
+}
+
 .quick-slot.active {
   border-color: #ffd700;
   box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);

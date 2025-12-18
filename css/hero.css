@@ -1,37 +1,6 @@
-body {
-  margin: 0;
-  overflow: hidden;
-}
-
-#Hero {
-  position: absolute;
-  width: 50px;
-  height: 50px;
-  background: url(../image/hero.png) center/contain no-repeat;
-  z-index: 10;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  transition: transform 0.1s;
-}
-
-.attack {
-  animation: attackAnim 0.2s forwards;
-}
-
-/* @keyframes attackAnim {
-  0% {
-    transform: translateX(0);
-  }
-  50% {
-    transform: translateX(30px);
-  }
-  100% {
-    transform: translateX(0);
-  }
-} */
-
-/* 검 휘두르는 애니메이션 */
+body{margin:0;overflow:hidden}
+#Hero{position:absolute;width:50px;height:50px;background:url(../image/hero.png) center/contain no-repeat;z-index:10;top:50%;left:50%;transform:translate(-50%,-50%);transition:transform .1s}
+.attack{animation:attackAnim .2s forwards}
 .sword-swing {
   animation: swordSwing 0.3s ease-out;
   animation-fill-mode: forwards;
@@ -80,19 +49,7 @@ body {
   z-index: 5;
 }
 
-#game-container {
-  position: relative;
-  width: 800px;
-  height: 600px;
-
-  margin: 0 auto;
-  overflow: hidden;
-
-  top: 0;
-  margin: 0 auto;
-  overflow: hidden;
-  z-index: 1;
-}
+#game-container{position:relative;width:800px;height:600px;margin:0 auto;overflow:hidden;top:0;z-index:1}
 
 .map {
   position: relative;
@@ -118,27 +75,20 @@ body {
   border: 3px solid black;
 }
 
+#boss {
+  background-image: url(../image/dungeon.jpg);
+  border: 3px solid black;
+}
+
 #shop {
   background-image: url(../image/shop.png);
 }
 
-.dungeon-Board {
-  position: absolute;
-  bottom: 10px;
-  left: 340px;
-  padding: 10px;
-  font-size: 20px;
-  font-weight: 600;
-  transition: all 0.2s;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  line-height: 1.5;
-  background-color: rgba(255, 255, 255, 0.5);
-  font-family: "NeoDonggeunmo";
-}
+.dungeon-Board,.shop-Board,.village-Board,.Boss-Board{position:absolute;padding:10px;font-size:20px;font-weight:600;transition:all .2s;display:flex;flex-direction:column;justify-content:center;align-items:center;line-height:1.5;background:rgba(255,255,255,.5);font-family:"NeoDonggeunmo"}
+.dungeon-Board{bottom:10px;left:340px}
+.shop-Board{top:280px;left:93px}
+.village-Board{top:10px;left:170px}
+.Boss-Board{top:130px;left:-10px}
 
 .dungeon-Board::after {
   content: "↓";
@@ -146,92 +96,6 @@ body {
   animation: bounceDown 0.5s infinite alternate;
 }
 
-.shop-Board {
-  position: absolute;
-  top: 280px;
-  left: 93px;
-  padding: 10px;
-  font-size: 20px;
-  font-weight: 600;
-  transition: all 0.2s;
+.shop-Board::before,.village-Board::before,.Boss-Board::before{content:"↑";display:inline-block;animation:bounceUp .5s infinite alternate}
 
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  line-height: 1.5;
-  background-color: rgba(255, 255, 255, 0.5);
-  font-family: "NeoDonggeunmo";
-}
-
-.shop-Board::before {
-  content: "↑";
-  display: inline-block;
-  animation: bounceUp 0.5s infinite alternate;
-}
-
-.village-Board {
-  position: absolute;
-  top: 10px;
-  left: 170px;
-  padding: 10px;
-  font-size: 20px;
-  font-weight: 600;
-  transition: all 0.2s;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  line-height: 1.5;
-  background-color: rgba(255, 255, 255, 0.5);
-  font-family: "NeoDonggeunmo";
-}
-
-.village-Board::before {
-  content: "↑";
-  display: inline-block;
-  animation: bounceUp 0.5s infinite alternate;
-}
-
-.Boss-Board {
-  position: absolute;
-  top: 130px;
-  left: -10px;
-  padding: 10px;
-  font-size: 20px;
-  font-weight: 600;
-  transition: all 0.2s;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  line-height: 1.5;
-  background-color: rgba(255, 255, 255, 0.5);
-  font-family: "NeoDonggeunmo";
-}
-
-.Boss-Board::before {
-  content: "↑";
-  display: inline-block;
-  animation: bounceUp 0.5s infinite alternate;
-}
-
-@keyframes bounceDown {
-  0% {
-    transform: translateY(5px);
-  }
-  100% {
-    transform: translateY(0);
-  }
-}
-
-@keyframes bounceUp {
-  0% {
-    transform: translateY(0);
-  }
-  100% {
-    transform: translateY(5px);
-  }
-}
+@keyframes bounceDown{0%{transform:translateY(5px)}100%{transform:translateY(0)}}@keyframes bounceUp{0%{transform:translateY(0)}100%{transform:translateY(5px)}}

@@ -62,6 +62,11 @@ document.addEventListener("DOMContentLoaded", () => {
           // 아이템 이모지 매핑
           const itemEmoji = {
             "작은 포션🧪": "🧪",
+            "큰 포션🧪": "🧪",
+            "공격력 포션⚔️": "⚔️",
+            "방어력 포션🛡️": "🛡️",
+            "경험치 포션⭐": "⭐",
+            "골드 포션💰": "💰",
             "철검🗡️": "🗡️",
             "총🔫": "🔫"
           };
@@ -77,8 +82,39 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  // 퀵슬롯 클릭 이벤트
+  // 퀵슬롯 클릭 이벤트 및 드래그 앤 드롭
   document.querySelectorAll(".quick-slot").forEach((slot, index) => {
+    // 드래그 오버 이벤트
+    slot.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = "move";
+      slot.classList.add("drag-over");
+    });
+
+    // 드래그 리브 이벤트
+    slot.addEventListener("dragleave", () => {
+      slot.classList.remove("drag-over");
+    });
+
+    // 드롭 이벤트
+    slot.addEventListener("drop", (e) => {
+      e.preventDefault();
+      slot.classList.remove("drag-over");
+
+      const itemName = e.dataTransfer.getData("text/plain");
+      if (itemName) {
+        // 퀵슬롯에 저장
+        const quickSlots = JSON.parse(localStorage.getItem("quickSlots")) || {};
+        quickSlots[index] = itemName;
+        localStorage.setItem("quickSlots", JSON.stringify(quickSlots));
+
+        if (typeof window.updateQuickSlots === "function") {
+          window.updateQuickSlots();
+        }
+      }
+    });
+
+    // 클릭 이벤트
     slot.addEventListener("click", () => {
       const slotContent = slot.querySelector(".slot-content");
       const itemName = slotContent.getAttribute("data-item");

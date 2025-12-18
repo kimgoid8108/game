@@ -8,17 +8,18 @@
 
 #Heroinfo {
   position: fixed;
-  width: 200px;
-  height: 100px;
-  background-color: rgba(255, 255, 255, 0.8);
+  width: 220px;
+  min-height: 120px;
+  background-color: rgba(255, 255, 255, 0.9);
   overflow: hidden;
   z-index: 99999;
   top: 0; /* 화면 최상단 */
   left: 0; /* 화면 왼쪽 끝 */
   pointer-events: auto;
   border-radius: 0 0 10px 0; /* 오른쪽 아래만 둥글게 */
-  opacity: 0.7; /* 반투명으로 덜 방해되도록 */
+  opacity: 0.85; /* 더 선명하게 */
   transition: opacity 0.3s ease;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
 }
 
 /* 호버 시 더 선명하게 */
@@ -47,4 +48,27 @@
   justify-content: center;
   margin-left: 80px;
   font-family: "NeoDonggeunmo";
+}
+
+.level-gold-top {
+  display: flex;
+  gap: 15px;
+  margin: 5px 0;
+}
+
+.level-display,
+.gold-display {
+  margin: 0;
+  font-size: 16px;
+  font-weight: bold;
+  color: #ffd700;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.level-display {
+  color: #4a90e2;
+}
+
+.gold-display {
+  color: #ffd700;
 }

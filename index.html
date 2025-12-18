@@ -40,30 +40,27 @@
   </head>
   <body>
     <script>
-      // BGM
       const bgm = new Audio("sound/citypop.mp3");
-      bgm.loop = true; // 무한 반복
-      bgm.volume = 0.4; //  볼륨
-
-      // 페이지 로드 후 재생
-      window.addEventListener("load", () => {
-        bgm.play().catch((err) => console.log("BGM 재생 실패:", err));
-      });
+      bgm.loop = true;
+      bgm.volume = 0.4;
+      window.addEventListener("load", () => bgm.play().catch((e) => console.log("BGM 재생 실패:", e)));
     </script>
 
     <div id="game-container">
       <div id="pageTransition"></div>
       <div id="nicknameModal" style="display: none">
         <div style="background: rgba(0, 0, 0, 0.8); padding: 30px; border-radius: 10px; text-align: center">
-          <h2 style="color: white; margin-bottom: 20px">닉네임을 입력하세요</h2>
+          <h2 style="color: #fff; margin-bottom: 20px">닉네임을 입력하세요</h2>
           <input
             type="text"
             id="nicknameInput"
             maxlength="10"
             placeholder="닉네임 (최대 10자)"
-            style="padding: 10px; font-size: 18px; border-radius: 5px; border: none; margin-bottom: 20px; width: 200px" />
-          <br />
-          <button id="nicknameSubmit" style="padding: 10px 30px; font-size: 18px; cursor: pointer; border-radius: 5px; border: none; background: #4caf50; color: white">확인</button>
+            style="padding: 10px; font-size: 18px; border-radius: 5px; border: none; margin-bottom: 20px; width: 200px" /><br /><button
+            id="nicknameSubmit"
+            style="padding: 10px 30px; font-size: 18px; cursor: pointer; border-radius: 5px; border: none; background: #4caf50; color: #fff">
+            확인
+          </button>
         </div>
       </div>
       <section id="mainWindow"></section>
@@ -72,8 +69,10 @@
         <div class="infomation">
           <h2 id="ninkname">이름:</h2>
           <p>체력: <span id="HP">100</span>/100</p>
-          <p>레벨: <span id="level">1</span></p>
-          <p id="gold">골드: <span id="goldAmount">0</span>G</p>
+          <div class="level-gold-top">
+            <p class="level-display">레벨: <span id="level">1</span></p>
+            <p class="gold-display" id="gold">골드: <span id="goldAmount">0</span>G</p>
+          </div>
           <p>경험치: <span id="EXP">0</span>/<span id="expMax">100</span></p>
         </div>
       </div>
@@ -99,10 +98,6 @@
                 <div class="stat-bar-fill exp-fill" id="expBarFill"></div>
                 <span class="stat-text" id="expText">0/100</span>
               </div>
-            </div>
-            <div class="level-gold">
-              <span>Lv.<span id="levelDisplay">1</span></span>
-              <span>💰<span id="goldDisplay">0</span>G</span>
             </div>
           </div>
         </div>
@@ -190,6 +185,8 @@
       </section>
       <section id="dungeon" class="map">
         <div class="monster" id="GreenMonster" data-name="그린 슬라임" data-hp="100" data-max-hp="100" data-attack="15" data-defense="5" data-gold="50" data-exp="30"></div>
+        <!-- <div class="monster" id="Monster" data-name="레드 슬라임" data-hp="150" data-max-hp="150" data-attack="20" data-defense="8" data-gold="80" data-exp="50"></div> -->
+        <!-- <div class="monster" id="blueMonster" data-name="블루 슬라임" data-hp="200" data-max-hp="200" data-attack="25" data-defense="10" data-gold="120" data-exp="80"></div> -->
         <div class="village-Board">마을 입구</div>
         <div class="Boss-Board">보스동굴 입구</div>
         <div class="obstacleList">

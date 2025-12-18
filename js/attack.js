@@ -1,30 +1,57 @@
-// 몬스터 요소 가져오기
-const monster = document.getElementById("GreenMonster");
-if (!monster) {
-  // 몬스터가 없으면 종료
-  console.warn("GreenMonster를 찾을 수 없습니다.");
-}
+// ⭐ 모든 몬스터 요소 가져오기
+const monsterIds = ["GreenMonster"]; // "Monster", "blueMonster", "BigBossMonster" 주석처리
+let monsters = {};
+monsterIds.forEach(id => {
+  const m = document.getElementById(id);
+  if (m) {
+    monsters[id] = {
+      element: m,
+      hp: parseInt(m.getAttribute("data-hp")) || 0,
+      maxHp: parseInt(m.getAttribute("data-max-hp")) || 0,
+      gold: parseInt(m.getAttribute("data-gold")) || 50,
+      exp: parseInt(m.getAttribute("data-exp")) || 30,
+      name: m.getAttribute("data-name") || "몬스터"
+    };
+  }
+});
 
-let monsterHp = monster ? parseInt(monster.getAttribute("data-hp")) : 0;
-let monsterMaxHp = monster ? parseInt(monster.getAttribute("data-max-hp")) : 0;
 let heroAttack = 5;
-
 let canAttack = true;
 
-// ⭐ 몬스터 데이터 가져오기 (골드/경험치용)
-let monsterGold = monster ? parseInt(monster.getAttribute("data-gold")) || 50 : 50;
-let monsterExp = monster ? parseInt(monster.getAttribute("data-exp")) || 30 : 30;
-let monsterName = monster ? monster.getAttribute("data-name") || "몬스터" : "몬스터";
+// ⭐ 가장 가까운 몬스터 찾기 함수
+function findNearestMonster(heroRect) {
+  let nearestMonster = null;
+  let minDistance = Infinity;
+
+  Object.keys(monsters).forEach(id => {
+    const m = monsters[id];
+    if (!m.element || m.element.style.display === "none" || m.hp <= 0) return;
+
+    const monsterRect = m.element.getBoundingClientRect();
+    const distance = Math.sqrt(
+      Math.pow(monsterRect.left + monsterRect.width / 2 - (heroRect.left + heroRect.width / 2), 2) +
+      Math.pow(monsterRect.top + monsterRect.height / 2 - (heroRect.top + heroRect.height / 2), 2)
+    );
+
+    if (distance < minDistance) {
+      minDistance = distance;
+      nearestMonster = m;
+      nearestMonster.id = id;
+    }
+  });
+
+  return nearestMonster;
+}
 
 // ⭐ HP 바는 monsterAttack.js에서 관리하므로 여기서는 생성하지 않음
 
 // ⭐ 몬스터 처치 함수
-function handleMonsterKill() {
-  if (!monster) return;
+function handleMonsterKill(monsterData) {
+  if (!monsterData) return;
 
   // 골드 획득
   let playerGold = parseInt(localStorage.getItem("playerGold")) || 0;
-  playerGold += monsterGold;
+  playerGold += monsterData.gold;
   localStorage.setItem("playerGold", playerGold);
 
   const goldDisplay = document.getElementById("gold");
@@ -39,7 +66,7 @@ function handleMonsterKill() {
   // 경험치 획득
   let playerExp = parseInt(localStorage.getItem("playerExp")) || 0;
   let playerLevel = parseInt(localStorage.getItem("playerLevel")) || 1;
-  playerExp += monsterExp;
+  playerExp += monsterData.exp;
   localStorage.setItem("playerExp", playerExp);
 
   const expDisplay = document.getElementById("EXP");
@@ -89,7 +116,7 @@ function handleMonsterKill() {
 
   // 알림 메시지 (박스 형식)
   if (typeof window.showRewardNotification === "function") {
-    window.showRewardNotification(monsterGold, monsterExp, monsterName);
+    window.showRewardNotification(monsterData.gold, monsterData.exp, monsterData.name);
   }
 
   // 사운드 재생
@@ -98,31 +125,31 @@ function handleMonsterKill() {
   deathSound.play().catch((err) => console.log("사운드 재생 실패:", err));
 
   // 몬스터 사라짐 효과
-  if (monster) {
-    monster.style.opacity = "0";
-    monster.style.transition = "opacity 0.5s";
+  if (monsterData.element) {
+    monsterData.element.style.opacity = "0";
+    monsterData.element.style.transition = "opacity 0.5s";
 
     setTimeout(() => {
-      monster.style.display = "none";
+      monsterData.element.style.display = "none";
     }, 500);
   }
 
   // 10초 후 몬스터 리젠
   setTimeout(() => {
-    if (monster) {
-      monsterHp = monsterMaxHp;
-      monster.setAttribute("data-hp", monsterHp);
-      monster.style.display = "block";
-      monster.style.opacity = "1";
+    if (monsterData.element) {
+      monsterData.hp = monsterData.maxHp;
+      monsterData.element.setAttribute("data-hp", monsterData.hp);
+      monsterData.element.style.display = "block";
+      monsterData.element.style.opacity = "1";
 
-      // monsterAttack.js의 monsterAI.isDead를 false로 설정하여 HP 바가 다시 나타나도록 함
-      if (window.monsterAI) {
-        window.monsterAI.isDead = false;
+      // monsterAttack.js의 해당 몬스터 AI 재시작
+      if (window.monsterAIs && window.monsterAIs[monsterData.id]) {
+        window.monsterAIs[monsterData.id].isDead = false;
       }
 
       // HP 바 업데이트 강제 실행
       if (typeof window.updateMonsterUI === "function") {
-        window.updateMonsterUI();
+        window.updateMonsterUI(monsterData.id);
       }
     }
   }, 10000);
@@ -227,37 +254,55 @@ window.addEventListener("keydown", (e) => {
 
       // 검 공격 범위 체크 (원형 범위)
       setTimeout(() => {
-        const monsterRect = monster.getBoundingClientRect();
         const heroRect = hero.getBoundingClientRect();
-        const distance = Math.sqrt(
-          Math.pow(monsterRect.left + monsterRect.width / 2 - (heroRect.left + heroRect.width / 2), 2) +
-          Math.pow(monsterRect.top + monsterRect.height / 2 - (heroRect.top + heroRect.height / 2), 2)
-        );
+        const nearestMonster = findNearestMonster(heroRect);
 
-        if (distance < 80 && monster) { // 검 공격 범위
-          // 몬스터 hp 감소
-          monsterHp -= heroAttack * 2; // 검은 공격력 2배
-          if (monsterHp < 0) monsterHp = 0;
+        if (nearestMonster && nearestMonster.element) {
+          const monsterRect = nearestMonster.element.getBoundingClientRect();
+          // Monster(레드 슬라임)의 경우 히트박스를 더 작게 계산
+          const hitboxReduction = nearestMonster.id === "Monster" ? 50 : 0;
+          const adjustedMonsterWidth = monsterRect.width - hitboxReduction;
+          const adjustedMonsterHeight = monsterRect.height - hitboxReduction;
+          const monsterCenterX = monsterRect.left + monsterRect.width / 2;
+          const monsterCenterY = monsterRect.top + monsterRect.height / 2;
+          const heroCenterX = heroRect.left + heroRect.width / 2;
+          const heroCenterY = heroRect.top + heroRect.height / 2;
 
-          // 몬스터 데이터 업데이트
-          monster.setAttribute("data-hp", monsterHp);
+          const distance = Math.sqrt(
+            Math.pow(monsterCenterX - heroCenterX, 2) +
+            Math.pow(monsterCenterY - heroCenterY, 2)
+          );
 
-          // monsterAttack.js의 damageMonster 함수 호출 (HP 바 업데이트용)
-          if (typeof window.damageMonster === "function") {
-            window.damageMonster(heroAttack * 2);
-          }
+          // Monster의 경우 더 작은 히트박스로 계산
+          const effectiveRadius = nearestMonster.id === "Monster"
+            ? Math.min(adjustedMonsterWidth, adjustedMonsterHeight) / 2 + 20
+            : 150; // 검 공격 범위 증가 (80 -> 150)
 
-          const originalfilter = monster.style.filter;
-          monster.style.filter =
-            "brightness(1.5) sepia(1) saturate(5) hue-rotate(-50deg)";
+          if (distance < effectiveRadius) { // 검 공격 범위
+            // 몬스터 hp 감소
+            nearestMonster.hp -= heroAttack * 2; // 검은 공격력 2배
+            if (nearestMonster.hp < 0) nearestMonster.hp = 0;
 
-          setTimeout(() => {
-            monster.style.filter = originalfilter;
-          }, 200);
+            // 몬스터 데이터 업데이트
+            nearestMonster.element.setAttribute("data-hp", nearestMonster.hp);
 
-          if (monsterHp <= 0) {
-            // 몬스터 처치 - 골드/경험치 지급
-            handleMonsterKill();
+            // monsterAttack.js의 damageMonster 함수 호출 (HP 바 업데이트용)
+            if (typeof window.damageMonster === "function") {
+              window.damageMonster(heroAttack * 2, nearestMonster.id);
+            }
+
+            const originalfilter = nearestMonster.element.style.filter;
+            nearestMonster.element.style.filter =
+              "brightness(1.5) sepia(1) saturate(5) hue-rotate(-50deg)";
+
+            setTimeout(() => {
+              nearestMonster.element.style.filter = originalfilter;
+            }, 200);
+
+            if (nearestMonster.hp <= 0) {
+              // 몬스터 처치 - 골드/경험치 지급
+              handleMonsterKill(nearestMonster);
+            }
           }
         }
       }, 100);
@@ -316,51 +361,55 @@ window.addEventListener("keydown", (e) => {
         // -----------------------------------------------------------------------
 
         // -----------------------------------------------------------------------
-        // 몬스터 히트박스 설정
-        const monsterRect = monster.getBoundingClientRect();
+        // 모든 몬스터와 충돌 체크
         const projectileRect = projectile.getBoundingClientRect();
 
-        const hitboxPadding = 1;
+        Object.keys(monsters).forEach(id => {
+          const m = monsters[id];
+          if (!m.element || m.element.style.display === "none" || m.hp <= 0) return;
 
-        if (
-          projectileRect.left < monsterRect.right - hitboxPadding &&
-          projectileRect.right > monsterRect.left + hitboxPadding &&
-          projectileRect.top < monsterRect.bottom - hitboxPadding &&
-          projectileRect.bottom > monsterRect.top + hitboxPadding
-        ) {
-          // 몬스터 hp 감소
-          monsterHp -= heroAttack;
-          if (monsterHp < 0) monsterHp = 0;
+          const monsterRect = m.element.getBoundingClientRect();
+          // Monster(레드 슬라임)의 히트박스를 더 작게 설정
+          const hitboxPadding = id === "Monster" ? 70 : 1;
+          const hitboxMargin = id === "Monster" ? 40 : 0;
 
-          // 몬스터 데이터 업데이트
-          if (monster) {
-            monster.setAttribute("data-hp", monsterHp);
-          }
+          if (
+            projectileRect.left < monsterRect.right - hitboxPadding &&
+            projectileRect.right > monsterRect.left + hitboxPadding + hitboxMargin &&
+            projectileRect.top < monsterRect.bottom - hitboxPadding &&
+            projectileRect.bottom > monsterRect.top + hitboxPadding + hitboxMargin
+          ) {
+            // 몬스터 hp 감소
+            m.hp -= heroAttack;
+            if (m.hp < 0) m.hp = 0;
 
-          // monsterAttack.js의 damageMonster 함수 호출 (HP 바 업데이트용)
-          if (typeof window.damageMonster === "function") {
-            window.damageMonster(heroAttack);
-          }
+            // 몬스터 데이터 업데이트
+            m.element.setAttribute("data-hp", m.hp);
 
-          const originalfilter = monster ? monster.style.filter : "";
-          if (monster) {
-            monster.style.filter =
+            // monsterAttack.js의 damageMonster 함수 호출 (HP 바 업데이트용)
+            if (typeof window.damageMonster === "function") {
+              window.damageMonster(heroAttack, id);
+            }
+
+            const originalfilter = m.element.style.filter;
+            m.element.style.filter =
               "brightness(1.5) sepia(1) saturate(5) hue-rotate(-50deg)";
 
             setTimeout(() => {
-              monster.style.filter = originalfilter;
+              m.element.style.filter = originalfilter;
             }, 200);
-          }
 
-          if (monsterHp <= 0) {
-            // 몬스터 처치 - 골드/경험치 지급
-            handleMonsterKill();
-          }
+            if (m.hp <= 0) {
+              // 몬스터 처치 - 골드/경험치 지급
+              m.id = id;
+              handleMonsterKill(m);
+            }
 
-          // 발사체 제거
-          clearInterval(moveInterval);
-          projectile.remove();
-        }
+            // 발사체 제거
+            clearInterval(moveInterval);
+            projectile.remove();
+          }
+        });
       }, 20);
     }
   }

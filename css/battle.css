@@ -93,6 +93,41 @@
   transition: transform 0.1s linear;
 }
 
+/* Monster, blueMonster, BigBossMonster 주석처리
+#Monster {
+  position: absolute;
+  left: 400px;
+  top: 350px;
+  width: 150px;
+  height: 150px;
+  background-image: url("../image/Monster.png");
+  background-size: cover;
+  transition: transform 0.1s linear;
+}
+
+#blueMonster {
+  position: absolute;
+  left: 600px;
+  top: 400px;
+  width: 150px;
+  height: 150px;
+  background-image: url("../image/blueMonster.png");
+  background-size: cover;
+  transition: transform 0.1s linear;
+}
+
+#BigBossMonster {
+  position: absolute;
+  left: 500px;
+  top: 400px;
+  width: 200px;
+  height: 200px;
+  background-image: url("../image/BigBossMonster.png");
+  background-size: cover;
+  transition: transform 0.1s linear;
+}
+*/
+
 /* 몬스터 HP 레이블 스타일 */
 .monster-hp-label {
   font-family: "NeoDonggeunmo", sans-serif !important;
